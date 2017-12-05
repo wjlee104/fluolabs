@@ -1,0 +1,72 @@
+from bird import Bird
+
+def setup():
+    global bird
+    size (800, 600)
+    bird = Bird()
+    
+def draw():
+    background(0)
+    bird.show()
+    bird.update()
+    
+def keyPressed():
+    if (key == ' '):
+        print("test")      
+        bird.up()
+                  
+                  ###############################Sketch
+  
+  class Bird():
+    def __init__(self):
+        self.y = height/2
+        self.x = 64
+        
+        self.gravity = 0.5     
+        self.lift = -12
+        self.velocity = 0
+    def show(self): 
+        fill(255)
+        ellipse(self.x, self.y, 32, 32)
+        
+    def update(self):
+        self.velocity += self.gravity
+        self.velocity *= 0.9
+        self.y += self.velocity
+                       
+        if(self.y > height):
+           self.y = height
+           self.velocity = 0  
+           
+        if (self.y < 0):
+            self.velocity =0
+            
+    def up(self):
+        self.velocity += self.lift
+        
+            
+            
+        ##################################Bird
+        
+     
+     class Pipe():
+    
+    def__init__(self):
+       self.top =random(height/2)
+       self.bottom = random(height/2)
+       self.x = width
+       self.w = 20
+       self.speed = 1
+       
+    def show(self):
+        pass
+        
+    def update(self):
+        pass
+        
+    def hits(self, bird):
+        pass
+    
+    def offscreen(self)
+        pass
+            ####################pipe  
