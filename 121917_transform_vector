@@ -1,0 +1,60 @@
+import fluo
+
+x = 0
+
+def setup():
+    size(640, 360)
+    print(sys.path)
+    
+def draw():
+    global x
+    background(255)
+    
+    fluo.showGrid(black = 155)
+    fill(155)
+    rect(20, 20, 40, 40)
+    
+    fill(0)
+    #rect(20+60, 20+80, 40, 40)
+    
+    
+    pushMatrix()
+    translate(60, 80)
+    
+    rect(20, 20, 40, 40)
+    popMatrix()
+    
+    pos = PVector(60, 60)
+    v = PVector(20, 40)
+    drawVector(v, pos)
+    # pushMatrix()
+    # translate(60, 60)
+    
+    # v = PVector(20, 40)
+    # rotate(v.heading2D() + x)
+    # x= x+ 0.01
+    # #fluo.showGrid(black=0)
+    
+    # #arrow
+    # arrowSize = 6
+    # stroke(255, 0, 0)
+    # line(0, 0, v.mag(), 0)
+    # line(v.mag(), 0, v.mag()- arrowSize, arrowSize/2)
+    # line(v.mag(), 0, v.mag()- arrowSize, -arrowSize/2)
+    # popMatrix()
+
+
+def drawVector(v, pos, scaly = 1, grid = True):
+    pushMatrix()
+    arrowSize = 6
+    translate(pos.x, pos.y)
+    stroke(0)
+    rotate(v.heading2D())
+    len = v.mag()*scaly
+    line(0, 0, len, 0)
+    line(len, 0, len - arrowSize, arrowSize/2)
+    line(len, 0, len - arrowSize, -arrowSize/2)
+    if (grid):
+        fluo.showGrid(black = 0)
+    
+    popMatrix()
