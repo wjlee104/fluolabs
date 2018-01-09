@@ -1,0 +1,53 @@
+def setup():
+    size(400, 400)
+
+def draw():
+    background(0)
+    
+    h=hour()
+    m=minute()
+    s=second()
+    
+    textSize(32)
+    text(str(h)+":" + str(m) + ":"+ str(s), 0, 32)
+    
+    translate(200, 200)
+    rotate(radians(-90))
+    
+    strokeWeight(4)
+    noFill()
+    
+    # seconds arc
+    stroke(255, 100, 150)
+    
+    sAngle = map(s, 0, 60, 0, 360)
+    #arc(200, 200, 300, 300, radians(0), radians(sAngle)) #radians(360)
+    arc(0, 0, 300, 300, radians(0), radians(sAngle), PIE) # adding CHORD or PIE
+    
+    pushMatrix()
+    rotate(radians(sAngle))
+    line (0, 0, 100, 0)
+    popMatrix()
+    
+    
+    # monutes arc
+    stroke(100, 150, 250)
+    mAngle = map(m, 0, 60, 0, 360)
+    arc(0, 0, 280, 280, radians(0), radians(mAngle))
+    
+    pushMatrix()
+    rotate(radians(mAngle))
+    line (0, 0, 80, 0)
+    popMatrix()
+    
+    # hours arc
+    stroke(100, 250, 150)
+    hAngle = map(h % 12, 0, 12, 0, 360)
+    arc(0, 0, 250, 250, radians(0), radians(hAngle))
+    
+    pushMatrix()
+    rotate(radians(hAngle))
+    line (0, 0, 50, 0)
+    popMatrix()
+    
+    
