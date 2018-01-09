@@ -1,0 +1,19 @@
+def setup():
+    size(400, 400)
+
+def draw():
+    background(0)
+    
+    h =hour()
+    m =minute()
+    s =second()
+    global x, y
+    
+    x=random(400)
+    y=random(400)
+    
+    textSize(50)
+    text(str(h)+":" + str(m), 0, 32)
+    text(str(s), x, y)
+    
+    #translate(200, 200)
