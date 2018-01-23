@@ -1,0 +1,45 @@
+def setup():
+    global x, y, s, ps, m, pm, rcolor
+    size(400, 400)
+    x = random(400)
+    y = random(400)
+    
+    s = second()
+    ps = s - 1
+    
+    
+    
+    m = minute()
+    pm = m - 1
+    background(0)
+    rcolor = color(random(255), random(255), random(255))
+    
+def draw():
+    global x, y, s, ps, m, pm, rcolor
+    fill(rcolor)
+
+    # Get hour, minuites, and seconds    
+    h = hour()
+    m = minute()
+    s = second()
+
+    if (s != ps):    # new second
+        #text(str(h) + ":" + str(m) + ":" + str(s), 0, 32)
+        x = random(width)
+        y = random(height)
+        ps = s
+        
+        rcolor = color(random(255), random(255), random(255))
+        
+        if (m != pm):  # new minute
+            pm = m
+            background(0)
+            fill(255)
+            textSize(64)
+            text(str(h) + ":" + str(m), 120, 200)
+        
+    textSize(32)
+    if (s != 0):
+        text(str(s), x, y)
+        
+    #saveFrame("output/dc_####.png")
