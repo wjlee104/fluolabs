@@ -1,0 +1,92 @@
+from stream import Stream
+#from symbol import Symbol
+
+def setup():
+    global strm #sym
+    size (800, 800)
+    #fullScreen()
+    background(0)
+    symSize = 40
+    
+    msfont = loadFont("data/MS-Gothic-48-new.vlw")
+    print(msfont)
+    textFont(msfont, symSize)
+    textSize(symSize)
+     
+    strm = Stream(symSize)
+    #sym = Symbol(width/2, 0, random(4, 10))
+    #sym.setRandomSymbol()
+    strm.generateSymbols()
+    
+def draw():
+    background(0)
+    strm.display()
+    
+    #################Matrix_W
+    
+    
+from symbol import Symbol
+class Stream():
+    def __init__(self, symSize):
+        self.symbols = []
+        self.totalSymbols = int(round(5, 30))
+        self.speed = int(random(5, 20))
+        self.symSize = symSize
+        
+    def generateSymbols(self):
+        y=0
+        x= width/2
+        
+        for i in range(self.totalSymbols):
+            sym = Symbol(x, y, self.speed)
+            sym.setRandomSymbol()
+            self.symbols.append(sym)
+            y = y- self.symSize
+            
+    def display(self):
+        for i in range(self.totalSymbols):
+            sym = self.symbols[i]
+            fill(0, 255, 70)
+            text(sym.value, sym.x, sym.y)
+            sym.update()
+            sym.setRandomSymbol()
+  
+  ###############stream
+  
+  
+  class Symbol():
+    
+    def __init__(self, x, y, speed):
+        self.x = x
+        self.y = y
+        self.speed = speed
+        self.switchInterval = int(random (2, 20))
+        
+    def setRandomSymbol(self):
+        if (frameCount % self.switchInterval == 0):
+            self.value = unichr(0x30A0 + int(random(95)))    
+        
+        #self.value = unichr(0x30A0 + 3) 
+    def display(self):
+        fill(0, 255, 70)
+        text(self.value, self.x, self.y)
+        self.update()
+        #if (frameCount % self.switchInterval == 0):
+        self.setRandomSymbol()
+        
+        
+        
+    def update(self):
+        #self.y = 0
+        #if (self.y >= height):
+            #self.y = 0
+        #else:
+        #self.y += self.speed
+        self.y = 0 if self.y >= height else self.y + self.speed
+
+
+
+
+######################## symbol
+  
+  
