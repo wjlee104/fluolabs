@@ -1,0 +1,122 @@
+from stream import Stream
+#from symbol import Symbol
+
+streams =[]
+
+def setup():
+    global strm, pause  #sym
+    size (800, 800)
+    #fullScreen()
+    background(0)
+    symSize = 26
+    pause= False
+    
+    #msfont = loadFont("data/MS-Gothic-48-new.vlw")
+    msfont = loadFont("data/Batang-48.vlw")
+    #print(msfont)
+    textFont(msfont, symSize)
+    
+    #textSize(symSize)
+     
+    strm = Stream(symSize)
+    #sym = Symbol(width/2, 0, random(4, 10))
+    #sym.setRandomSymbol()
+    #strm.generateSymbols()
+    
+    x=0
+    i=0
+    while(i <= (width/symSize)):
+        st = Stream(symSize)
+        st.generateSymbols(x, random(-500, 0))
+        streams.append(st)
+        x += symSize
+        i +=1
+    
+def draw():
+    background(0, -170)
+    #strm.display(pause)
+    print(frameRate)
+    
+    for i in range(len(streams)):
+        streams[i].display(pause)
+def keyPressed():
+    global pause
+    pause= not pause
+    
+    #######################################sketch180206_matrix
+    
+from symbol import Symbol
+class Stream():
+    def __init__(self, symSize):
+        self.symbols = []
+        self.totalSymbols = int(random(5, 25))
+        self.speed = int(random(5, 20))
+        self.symSize = symSize
+        self.darkStart = int(random(self.totalSymbols))
+        
+    def generateSymbols(self, x, y):
+        first = round(random(0,4)) == 1
+        opacity = 255
+        #first = True
+        #y=0
+        #x= width/2
+        
+        for i in range(self.totalSymbols):
+            sym = Symbol(x, y, self.speed, first, opacity)
+            sym.setRandomSymbol()
+            self.symbols.append(sym)
+            y = y- self.symSize
+            first = False
+            if (i >= self.darkStart):
+                opacity = opacity-20
+            
+    def display(self, pause):
+        for i in range(self.totalSymbols):
+            sym = self.symbols[i]
+            if(sym.first):
+                fill(180, 255, 180, sym.opacity)
+            else:
+                fill(0, 255, 70, sym.opacity)
+            text(sym.value, sym.x, sym.y)
+            if (not pause):
+                sym.update()
+            sym.setRandomSymbol()
+            
+ ########################stream.py
+ 
+ 
+ class Symbol():
+    
+    def __init__(self, x, y, speed, first, opacity):
+        self.x = x
+        self.y = y
+        self.speed = speed
+        self.switchInterval = int(random (2, 20))
+        self.first = first
+        self.opacity = opacity
+        
+    def setRandomSymbol(self):
+        if (frameCount % self.switchInterval == 0):
+            self.value = unichr(0x1100 + int(random(256)))    
+        
+        #self.value = unichr(0x30A0 + 3) 
+    def display(self):
+        fill(0, 255, 70)
+        text(self.value, self.x, self.y)
+        self.update()
+        #if (frameCount % self.switchInterval == 0):
+        self.setRandomSymbol()
+        
+        
+        
+    def update(self):
+        #self.y = 0
+        #if (self.y >= height):
+            #self.y = 0
+        #else:
+        #self.y += self.speed
+        self.y = 0 if self.y >= height else self.y + self.speed
+    ########################################################### symbol.py
+ 
+ 
+
