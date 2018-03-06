@@ -1,0 +1,221 @@
+import fluo
+import anna
+
+UP = 0
+RIGHT = 1
+DOWN = 2
+LEFT = 3
+
+def setup():
+    global angle
+    size(400, 400)
+    
+def draw():
+    global annaX, annaY, annaDir
+
+    background(0)
+    stroke(random(256), random(256), random(256))
+    strokeWeight(2)
+    translate(width/2, height/2)
+    an = anna.Anna(-120, 0, anna.RIGHT)
+    fluo.showGrid()
+    # annaX = -120
+    # annaY = 0
+    # annaDir = RIGHT
+    
+    for i in range(10):
+        an.createCircle()
+        an.jumpForward(25)
+        #print(an.x, an.y)
+        
+        #createCircle(annaX, annaY, annaDir)
+        #annaX, annaY = jumpForward(annaX, annaY, annaDir, 25)
+    noLoop()
+    
+# def moveForward(x, y, dir, amount):
+#     if (dir == UP):
+#         line(x, y, x, y - amount)
+#         y = y - amount
+#     elif (dir == RIGHT):
+#         line(x, y, x + amount, y)
+#         x = x + amount
+#     elif (dir == DOWN):
+#         line(x, y, x, y + amount)
+#         y = y + amount
+#     else:
+#         line(x, y, x - amount, y)
+#         x = x - amount
+        
+#     return (x, y)
+
+# def jumpForward(x, y, dir, amount):
+#     if (dir == UP):
+#         y = y - amount
+#     elif (dir == RIGHT):
+#         x = x + amount
+#     elif (dir == DOWN):
+#         y = y + amount
+#     else:
+#         x = x - amount   
+#     return(x, y)
+         
+# def createCircle(x, y, dir):
+#     pushMatrix()
+#     for i in range(360):
+#         x, y = moveForward(x, y, dir, 1)
+#         translate(x, y)
+#         rotate(radians(1))
+#         x = 0
+#         x = 0
+#     popMatrix()
+        
+# def turn(dir=RIGHT):
+#     global annaDir
+#     if (dir == RIGHT):
+#         annaDir = annaDir + 1
+#     else: 
+#         annaDir = annaDir - 1
+    
+#     if (annaDir > 3):
+#         annaDir = annaDir % 4
+        
+#     if (annaDir < 0):
+#         annaDir = annaDir + 4
+    #############################################elsa_w_1
+    
+UP = 0
+RIGHT = 1
+DOWN = 2
+LEFT = 3
+
+class Anna():
+    def __init__(self, x, y, dir):
+        self.x=x
+        self.y=y
+        self.dir = dir
+    
+    def moveForward(self, amount):
+        if (self.dir == UP):
+            line(self.x, self.y, self.x, self.y - amount)
+            self.y -=  amount
+        elif (self.dir == RIGHT):
+            line(self.x, self.y, self.x + amount, self.y)
+            self.x +=  amount
+        elif (self.dir == DOWN):
+            line(self.x, self.y, self.x, self.y + amount)
+            self.y +=  amount
+        else:
+            line(self.x, self.y, self.x - amount, self.y)
+            self.x -=  amount
+        
+   
+    def jumpForward(self, amount):
+        print("before:")     
+        print(self.x, self.y)
+        
+        if (self.dir == UP):
+            self.y = self.y - amount
+        elif (self.dir == RIGHT):
+            self.x +=  amount
+        elif (self.dir == DOWN):
+            self.y +=  amount
+        else:
+            self.x -=  amount  
+           
+        print("after:")     
+        print(self.x, self.y)
+    
+    def createCircle(self):
+        x = self.x
+        y = self.y
+        
+        pushMatrix()
+        
+        for i in range(360):
+            
+            self.moveForward(1)
+            translate(self.x, self.y)
+            rotate(radians(1))
+            self.x = 0
+            self.y = 0
+        popMatrix()
+        
+        self.x = x
+        self.y = y
+    
+    
+    def turn(self, dir=RIGHT):
+    
+        if (dir == RIGHT):
+            self.dir +=  1
+        else: 
+            self.dir -=  1
+        
+        if (self.dir > 3):
+            self.dir = self.dir % 4
+            
+        if (annaDir < 0):
+            self.dir = self.dir + 4
+    ########################################anna.py
+    
+initialized = False
+
+def showGrid(r=20, lineColor=155, lineWeight=1, index=False, w=None, h=None):
+    """Display grid lines"""
+    global nRows, nCols, resolution, initialized
+    if (w == None):
+        w = width
+    if (h == None):
+        h = height
+
+    if (initialized == False):
+        nRows = h/r
+        nCols = w/r
+        initialized = True
+        resolution = r
+    
+    pushStyle()
+    stroke(lineColor)
+    strokeWeight(1)
+    textSize(12)
+    for i in range(nRows + 1):
+        line(0, r*i, w, r*i)
+    for i in range(nCols + 1):
+        line(r*i, 0, r*i, h)
+        
+    if (index):
+        fill(255, 0, 0)
+        for i in range(nRows):
+            text(str(i), 0, r*(i+1))
+        fill(0)
+        for i in range(nCols):
+            text(str(i), r*(i), 10)
+    else:
+        fill(150)
+        text("   0", 0, 10)
+        text(str(w), w - 20, 10)
+        fill(255, 0, 0)
+        text("0", 0, 10)
+        text(str(h), 0, h)
+        
+    popStyle()
+        
+# Renders a vector object 'v' as an arrow and a position 'loc'
+def drawVector(v, pos, scayl):
+    pushMatrix()
+    arrowsize = 6
+    # Translate to position to render vector
+    translate(pos.x, pos.y)
+    stroke(0)
+    strokeWeight(2)
+    # Call vector heading function to get direction (pointing up is a heading of 0)
+    rotate(v.heading2D())
+    # Calculate length of vector & scale it to be bigger or smaller if necessary
+    len = v.mag()*scayl
+    # Draw three lines to make an arrow 
+    line(0, 0, len, 0)
+    line(len, 0, len-arrowsize, +arrowsize/2)
+    line(len, 0, len-arrowsize, -arrowsize/2)
+    popMatrix()
+    
+    ###################################################fluo
