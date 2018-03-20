@@ -1,0 +1,67 @@
+from key import Key
+keys = []
+maxSize = 10
+
+
+def setup():
+    size(600,600)
+    background(220)
+    textSize(32)
+    
+    #keys.append('a')
+    #keys_x.append(width/2)
+    #keys_y.append(0)
+    #keys_col.append(color(random(256), random(256), random(256)))
+        
+def draw():
+    background(220)
+
+    for i in range (len(keys)):
+        
+        keys[i].display()
+        keys[i].update()
+    
+    while(len(keys) < maxSize):
+        addRandomKey()
+        
+                        
+    fill(0)
+    text(str(len(keys)), width - 100, 32)
+        
+def keyTyped():
+    if (key == ' '):
+        del keys[:]
+        
+    else:
+        addKey(key)
+            
+def addKey(ch):
+        
+        keys.append(Key(ch, random(width), 0, color(random(256), random(256), random(256))))
+        #keys_x.append(random(width))
+        #keys_y.append(0)
+        #keys_col.append(color(random(256), random(256), random(256)))
+def addRandomKey():
+    addKey(unichr(97 + random(26)))
+    
+            ############################sketch032018
+            
+            
+            
+class Key():
+    def __init__(self, ch, x, y, col):
+        self.ch = ch
+        self.x = x
+        self.y = y
+        self.col = col
+    
+    def display(self):
+        fill(self.col)
+        text(self.ch, self.x, self.y)
+        
+    def update(self):
+        self.y += 1
+        if (self.y > height):
+            self.y = 0
+            
+   ##############################key
