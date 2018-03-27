@@ -1,0 +1,57 @@
+from key import Key
+
+keys = []
+
+
+def setup():
+    global x
+    size(600, 600)
+    x= width/2
+    background(220)
+    textSize(32)
+    
+    keys.append(Key('a', width/2, 0, color(random(256), random(256), random(256))))
+    #chs.append('a')
+    #ch_x.append(width/2)
+    #ch_y.append(0)
+    #cols.append(color(random(256), random(256), random(256)))
+    
+    
+def draw():
+    #global ch, y
+    background(220)
+    
+    for i in range(len(keys)):
+        fill(keys[i].col)
+        text(keys[i].ch, keys[i].x, keys[i].y)
+        keys[i].y += 1
+    
+    if (keys[i].y > height):
+        keys[i].y = 0
+        
+    #fill(0)
+    text(len(keys), width-100, 32)
+    
+def keyTyped():
+    keys.append(Key(key, random(width), 0, color(random(256), random(256), random(256))))
+    #global ch
+    #chs.append(key)
+    #ch_x.append(random(width))
+    #ch_y.append(0)
+    #fill(random(256), random(256), random(256))
+    #cols.append(color(random(256), random(256), random(256)))
+    #chs[0] = key
+#########################################################################032718
+
+
+class Key():
+    
+    def __init__(self, ch, x, y, col):
+        self.ch = ch
+        self.x = x
+        self.y = y
+        self.col =col
+        
+        
+        ##########################key
+
