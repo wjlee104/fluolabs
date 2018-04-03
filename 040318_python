@@ -1,0 +1,54 @@
+def keyTyped():
+    if (key == ' '):
+        del letters[:]
+    elif (key in['1', '2' or '3']):
+    #elif (key == '1' or key == '2' or key == '3'):
+        if (len(letters) > int(key)- 1):
+            del letters[0:int(key)]    
+    #elif (key == '1'):
+        #if (len(letters) > 0):
+            #del letters[0]
+    
+    #elif (key == '2'):
+        #if (len(letters) > 1):
+            #del letters[0:2]
+            
+    #elif (key == '3'):
+        #if (len(letters) > 3):
+            #del letters[0:3]
+            
+    else:    
+        letters.append(Letter(key, random(width), 0, color(random(256), random(256), random(256))))
+    
+    #global ch
+    #chs.append(key)
+    #ch_x.append(random(width))
+    #ch_y.append(0)
+    #fill(random(256), random(256), random(256))
+    #cols.append(color(random(256), random(256), random(256)))
+    #chs[0] = key
+    
+    
+    #################################################040318
+    
+    
+    class Letter():
+    
+    def __init__(self, ch, x, y, col):
+        self.ch = ch
+        self.x = x
+        self.y = y
+        self.col =col
+        
+    def display(self):
+        fill(self.col)
+        text(self.ch, self.x, self.y)
+        
+    def update(self):
+        self.y += 1
+    
+        if (self.y > height):
+            self.y = 0
+            
+            ####################letter.py
+    
